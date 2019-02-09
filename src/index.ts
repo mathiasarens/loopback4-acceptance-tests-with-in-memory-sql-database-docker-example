@@ -6,7 +6,10 @@ export {Loopback4InMemoryAcceptanceTestsExampleApplication};
 
 export async function main(options: ApplicationConfig = {}) {
   const app = new Loopback4InMemoryAcceptanceTestsExampleApplication(options);
+
+  // configure development datasource
   app.dataSource(TodoDataSource);
+
   await app.boot();
   await app.start();
 

@@ -37,6 +37,7 @@ export class Loopback4InMemoryAcceptanceTestsExampleApplication extends BootMixi
         extensions: ['.controller.js'],
         nested: true,
       },
+      // don't pickup development datasources
       datasources: {
         dirs: [],
         extensions: [],
