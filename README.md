@@ -3,15 +3,13 @@
 This Loopback 4 example includes
 
 1. in-memory acceptance tests and a postgresql datasource for development/production.
-2. configurations updates to run in a docker container
-3. Optimisations for CircleCI
+2. optimisations to run tests in a docker container
+3. setup for CircleCI
 4. Visual Studio Code launch.json for debugging
 
 Tests run in a docker container on [CircleCI](https://circleci.com)
 
-# Modifications to standard configuration
-
-## Stop loopback 4 booter from picking up development datasources during tests
+# Modifications to standard configurations
 
 The most difficult part in the configuration is to stop the loopback 4 booter in the acceptance tests from picking up the developement/production datasource during app.boot() command. This causes a ConnectException in a docker container without a postgresql installation.
 Therefore I nulled the bootOptions in [src/application.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/application.ts) from
@@ -64,13 +62,39 @@ app.dataSource(TodoDataSource);
 await app.boot();
 ```
 
-Do the same for the devlopment/production datasource in [src/index.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/index.ts)
+Do the same for the development/production datasource in [src/index.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/index.ts)
 
 ```typescript
 import {TodoDataSource} from './datasources/todo.datasource';
 ...
 app.dataSource(TodoDataSource);
 await app.boot();
+```
+
+# Set up for Circle CI
+
+1. reactivate package-lock.json in [.npmrc](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/.npmrc)
+2. add [config.yml]() to .circleci directory
+
+```yaml
+version: 2
+jobs:
+  build:
+    docker: # use the docker executor type; machine and macos executors are also supported
+      - image: circleci/node:11.8 # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - restore_cache:
+          keys:
+            - npm-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - npm-cache-{{ .Branch }}-
+            - npm-cache-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: npm-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: npm run test
 ```
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)

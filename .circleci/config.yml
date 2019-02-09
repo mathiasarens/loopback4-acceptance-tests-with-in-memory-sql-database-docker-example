@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    docker: # use the docker executor type; machine and macos executors are also supported
+      - image: circleci/node:11.8 # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - restore_cache:
+          keys:
+            - npm-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - npm-cache-{{ .Branch }}-
+            - npm-cache-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: npm-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: npm run test
