@@ -1,10 +1,15 @@
 import {Loopback4InMemoryAcceptanceTestsExampleApplication} from './application';
+import {TodoDataSource} from './datasources/todo.datasource';
 
 export async function migrate(args: string[]) {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
   console.log('Migrating schemas (%s existing schema)', existingSchema);
 
   const app = new Loopback4InMemoryAcceptanceTestsExampleApplication();
+
+  // configure development datasource
+  app.dataSource(TodoDataSource);
+
   await app.boot();
   await app.migrateSchema({existingSchema});
 

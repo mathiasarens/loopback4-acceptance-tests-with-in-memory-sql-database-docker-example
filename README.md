@@ -74,6 +74,15 @@ app.dataSource(TodoDataSource);
 await app.boot();
 ```
 
+And you have to do the same change to the [src/migrate.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/migrate.ts) to run 'npm run migrate -- --rebuild' to setup a fresh development database
+
+```typescript
+import {TodoDataSource} from './datasources/todo.datasource';
+...
+app.dataSource(TodoDataSource);
+await app.boot();
+```
+
 # Auto-increment ids through SQL database
 
 1. add 'generated: true' to the id property in [src/models/todo.model.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/models/todo.model.ts)
