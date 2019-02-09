@@ -3,9 +3,10 @@
 This Loopback 4 example includes
 
 1. in-memory acceptance tests and a postgresql datasource for development/production.
-2. optimisations to run tests in a docker container
-3. set up for CircleCI
-4. Visual Studio Code launch.json for debugging
+2. auto increment of ids through the SQL database
+3. optimisations to run tests in a docker container
+4. set up for CircleCI
+5. Visual Studio Code launch.json for debugging
 
 A very simple todo application is used to demonstrate the configuration changes.
 
@@ -71,6 +72,19 @@ import {TodoDataSource} from './datasources/todo.datasource';
 ...
 app.dataSource(TodoDataSource);
 await app.boot();
+```
+
+# Auto-increment ids through SQL database
+
+1. add 'generated: true' to the id property in [src/models/todo.model.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/models/todo.model.ts)
+
+```typescript
+  @property({
+    type: 'number',
+    id: true,
+    generated: true,
+  })
+  id?: number;
 ```
 
 # Optimisations to run tests in a docker container
