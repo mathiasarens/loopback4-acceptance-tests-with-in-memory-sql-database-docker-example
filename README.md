@@ -7,6 +7,8 @@ This Loopback 4 example includes
 3. set up for CircleCI
 4. Visual Studio Code launch.json for debugging
 
+A very simple todo application is used to demonstrate the configuration changes.
+
 Tests run in a docker container on [CircleCI](https://circleci.com/gh/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example)
 
 # Modifications to standard configurations
