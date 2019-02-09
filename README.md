@@ -4,7 +4,7 @@ This Loopback 4 example includes
 
 1. in-memory acceptance tests and a postgresql datasource for development/production.
 2. optimisations to run tests in a docker container
-3. setup for CircleCI
+3. set up for CircleCI
 4. Visual Studio Code launch.json for debugging
 
 Tests run in a docker container on [CircleCI](https://circleci.com)
@@ -71,19 +71,32 @@ app.dataSource(TodoDataSource);
 await app.boot();
 ```
 
+# Optimisations to run tests in a docker container
+
+Change host to '127.0.0.1' in
+[src/\_\_tests\_\_/acceptance/test-helper.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/__tests__/acceptance/test-helper.ts) to run tests in a docker environment
+
+```typescript
+const config = givenHttpServerConfig();
+config.host = '127.0.0.1';
+const app = new Loopback4InMemoryAcceptanceTestsExampleApplication({
+  rest: config,
+});
+```
+
 # Set up for Circle CI
 
 1. reactivate package-lock.json in [.npmrc](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/.npmrc)
-2. add [config.yml]() to .circleci directory
+2. add [config.yml](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/.circleci/config.yml) to .circleci directory
 
 ```yaml
 version: 2
 jobs:
   build:
-    docker: # use the docker executor type; machine and macos executors are also supported
-      - image: circleci/node:11.8 # the primary container, where your job's commands are run
+    docker:
+      - image: circleci/node:11.8
     steps:
-      - checkout # check out the code in the project directory
+      - checkout
       - restore_cache:
           keys:
             - npm-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
@@ -96,5 +109,29 @@ jobs:
           key: npm-cache-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: npm run test
 ```
+
+# Visual Studio Code launch.json for debugging
+
+Add
+
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Mocha Tests",
+  "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+  "args": [
+    "-u",
+    "tdd",
+    "--timeout",
+    "999999",
+    "--colors",
+    "${workspaceFolder}/dist/test"
+  ],
+  "internalConsoleOptions": "openOnSessionStart"
+}
+```
+
+to your [.vscode/launch.json]() to debug all tests
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)

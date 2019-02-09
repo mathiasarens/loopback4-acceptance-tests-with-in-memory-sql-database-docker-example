@@ -7,8 +7,10 @@ import {
 import {TodoDataSource} from '../fixtures/datasources/todo.datasource';
 
 export async function setupApplication(): Promise<AppWithClient> {
+  const config = givenHttpServerConfig();
+  config.host = '127.0.0.1';
   const app = new Loopback4InMemoryAcceptanceTestsExampleApplication({
-    rest: givenHttpServerConfig(),
+    rest: config,
   });
 
   app.dataSource(TodoDataSource);
