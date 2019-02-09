@@ -1,4 +1,4 @@
-# Loopback 4 Example
+# Loopback 4 Example [![CircleCI](https://circleci.com/gh/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example.svg?style=svg)](https://circleci.com/gh/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example)
 
 This Loopback 4 example includes
 
