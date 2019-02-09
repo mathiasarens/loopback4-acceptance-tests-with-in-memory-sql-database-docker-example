@@ -11,7 +11,7 @@ A very simple todo application is used to demonstrate the configuration changes.
 
 Tests run in a docker container on [CircleCI](https://circleci.com/gh/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example)
 
-# Modifications to standard configurations
+# Modifications to standard configuration
 
 The most difficult part in the configuration is to stop the loopback 4 booter in the acceptance tests from picking up the developement/production datasource during app.boot() command. This causes a ConnectException in a docker container without a postgresql installation.
 Therefore I nulled the bootOptions in [src/application.ts](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/src/application.ts) from
