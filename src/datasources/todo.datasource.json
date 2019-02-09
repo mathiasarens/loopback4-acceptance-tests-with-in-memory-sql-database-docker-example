@@ -1,0 +1,10 @@
+{
+  "name": "todo",
+  "connector": "postgresql",
+  "url": "postgres://todo:todopass@localhost/tododb",
+  "host": "localhost",
+  "port": 5432,
+  "user": "todo",
+  "password": "todopass",
+  "database": "tododb"
+}

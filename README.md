@@ -4,7 +4,8 @@ This Loopback 4 example includes
 
 1. in-memory acceptance tests and a postgresql datasource for development/production.
 2. configurations updates to run in an docker container
-3. Visual Studio Code launch.json for debugging
+3. Optimisations for CircleCI
+4. Visual Studio Code launch.json for debugging
 
 Tests run in a docker container on [CircleCI](https://circleci.com)
 
