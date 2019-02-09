@@ -132,6 +132,6 @@ Add
 }
 ```
 
-to your [.vscode/launch.json]() to debug all tests
+to your [.vscode/launch.json](https://github.com/mathiasarens/loopback4-acceptance-tests-with-in-memory-sql-database-docker-example/blob/master/.vscode/launch.json) to debug all tests
 
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
